@@ -1,0 +1,7 @@
+.DS_Store
+iso/
+*.iso
+*.qcow2
+*.key
+*.pem
+secrets/

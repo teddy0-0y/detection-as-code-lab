@@ -1,0 +1,25 @@
+title: Modification of cron.d Directory
+id: 7b1c2d3e-1a02-4c22-9a02-aud1tcr0nd001
+status: experimental
+description: >
+  Detects creation or modification of files under /etc/cron.d/.
+  Watching only /etc/crontab misses this path, so an actor can drop a
+  scheduled job here for persistence.
+references:
+  - https://attack.mitre.org/techniques/T1053/003/
+author: Yen-Chu Chen
+date: 2026/11/09
+logsource:
+  product: linux
+  service: auditd
+detection:
+  selection:
+    key: 'persistence'
+    name|startswith: '/etc/cron.d/'
+  condition: selection
+falsepositives:
+  - Package installs or administrators adding scheduled jobs
+level: high
+tags:
+  - attack.persistence
+  - attack.t1053.003

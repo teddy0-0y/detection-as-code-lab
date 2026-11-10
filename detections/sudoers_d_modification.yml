@@ -1,0 +1,25 @@
+title: Modification of sudoers.d Directory
+id: 7b1c2d3e-1a01-4c11-9a01-aud1t5ud0ers1
+status: experimental
+description: >
+  Detects creation or modification of files under /etc/sudoers.d/.
+  Watching only /etc/sudoers misses this path, so an actor can drop a
+  NOPASSWD rule here to gain persistent privilege escalation.
+references:
+  - https://attack.mitre.org/techniques/T1548/003/
+author: Yen-Chu Chen
+date: 2026/11/09
+logsource:
+  product: linux
+  service: auditd
+detection:
+  selection:
+    key: 'priv_esc'
+    name|startswith: '/etc/sudoers.d/'
+  condition: selection
+falsepositives:
+  - Administrators adding sudo rules through configuration management
+level: high
+tags:
+  - attack.privilege_escalation
+  - attack.t1548.003

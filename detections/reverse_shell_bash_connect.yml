@@ -1,0 +1,26 @@
+title: Shell Process Making Outbound Network Connection
+id: 7b1c2d3e-1a03-4c33-9a03-aud1trev5h001
+status: experimental
+description: >
+  Detects a bash process issuing a connect() syscall. A shell does not
+  normally open outbound network connections, so this is a strong
+  indicator of a reverse shell. File-based rules miss this because no
+  monitored file is touched.
+references:
+  - https://attack.mitre.org/techniques/T1059/004/
+author: Yen-Chu Chen
+date: 2026/11/09
+logsource:
+  product: linux
+  service: auditd
+detection:
+  selection:
+    key: 'reverse_shell'
+    exe|endswith: '/bash'
+  condition: selection
+falsepositives:
+  - Scripts that legitimately open sockets from bash (rare; tune per host)
+level: high
+tags:
+  - attack.execution
+  - attack.t1059.004
